@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const Container = styled.header`
   display: flex;
+  justify-content: center;
 
   color: #333333;
   font-size: 1.2rem;
@@ -14,4 +15,11 @@ const Container = styled.header`
   box-shadow: 0 0 2rem #0000000d;
 `;
 
-export { Container };
+const Contents = styled.div`
+  display: flex;
+  justify-content: space-between;
+  max-width: 1400px;
+  width: 100%;
+`;
+
+export { Container, Contents };

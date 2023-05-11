@@ -1,4 +1,5 @@
 import * as S from './styles';
+import StudyList from 'components/StudyList';
 import Books from 'assets/books.png';
 
 function Main() {
@@ -15,7 +16,8 @@ function Main() {
           </S.NoticeDiv>
         </S.SampleNotice>
       </S.Notice>
-      메인
+      <S.Title>진행중인 스터디</S.Title>
+      <StudyList />
     </S.Container>
   );
 }

@@ -5,10 +5,13 @@ const Container = styled.div`
   flex-direction: column;
   gap: 1rem;
 
+  max-width: 1400px;
+
   color: #333333;
   font-size: 1rem;
   font-weight: bold;
 
+  margin: auto;
   padding: 1.7rem 1.2rem;
 `;
 
@@ -64,4 +67,10 @@ const NoticeDiv = styled.div`
   height: 100%;
 `;
 
-export { Container, Notice, SampleNotice, NoticeText, NoticeDiv };
+const Title = styled.h2`
+  font-size: 2rem;
+  font-weight: bold;
+
+  margin-top: 1rem;
+`;
+export { Container, Notice, SampleNotice, NoticeText, NoticeDiv, Title };
