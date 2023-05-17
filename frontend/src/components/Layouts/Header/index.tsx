@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import * as S from './styles';
 
 function Header() {
@@ -5,10 +6,8 @@ function Header() {
     <div>
       <S.Container>
         <S.Contents>
-          <span>SMART ECLASS</span>
-          <span>
-            <button onClick={() => alert('준비중')}>로그인</button>
-          </span>
+          <Link to="/">SMART ECLASS</Link>
+          <Link to="/login">로그인</Link>
         </S.Contents>
       </S.Container>
     </div>

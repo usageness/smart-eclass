@@ -23,6 +23,15 @@ const GlobalStyles = createGlobalStyle`
       -ms-user-select: auto;
       user-select: auto;
     }
+    input {
+      height: 2.5rem;
+
+      padding: 1rem;
+
+      outline: 0;
+      border: 1px solid #cccccc;
+      border-radius: 25px;
+    }
     input:focus {
       outline: none;
     }

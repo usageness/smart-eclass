@@ -29,6 +29,7 @@ module.exports = {
           { pattern: 'styles/**', group: 'internal' },
           { pattern: 'types/**', group: 'internal' },
           { pattern: 'utils/**', group: 'internal' },
+          { pattern: 'hooks/**', group: 'internal' },
         ],
         pathGroupsExcludedImportTypes: ['react'],
         alphabetize: {
