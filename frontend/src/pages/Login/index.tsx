@@ -1,3 +1,5 @@
+import { requestLogin } from 'apis/request/auth';
+import useAuth from 'hooks/useAuth';
 import useInput from 'hooks/useInput';
 import { Link } from 'react-router-dom';
 import * as S from './styles';
@@ -5,17 +7,28 @@ import * as S from './styles';
 function Login() {
   const [id, setId] = useInput('');
   const [password, setPassword] = useInput('');
+  const { setAuth, setLogin } = useAuth();
 
-  const requestLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const login = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    alert('준비중');
+    if (!id || !password) alert('아이디와 비밀번호를 입력해주세요');
+
+    requestLogin({ id, password })
+      .then(({ username, accessToken }) => {
+        setAuth(accessToken);
+        setLogin({ id, nickname: username });
+        alert(`${username}님, 환영합니다!`);
+      })
+      .catch(error => {
+        alert(error.response.data.message);
+      });
   };
 
   return (
     <S.Container>
       <S.CardContainer>
-        <S.Form onSubmit={requestLogin}>
+        <S.Form onSubmit={login}>
           <label>
             <span>아이디</span>
             <input type="text" value={id} onChange={setId} />
