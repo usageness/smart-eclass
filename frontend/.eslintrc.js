@@ -23,6 +23,7 @@ module.exports = {
             group: 'external',
             position: 'before',
           },
+          { pattern: 'apis/**', group: 'internal' },
           { pattern: 'assets/**', group: 'internal' },
           { pattern: 'components/**', group: 'internal' },
           { pattern: 'pages/**', group: 'internal' },
