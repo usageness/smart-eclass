@@ -1,34 +1,61 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Headers,
+  Res,
+  HttpStatus,
+} from '@nestjs/common';
 import { StudyService } from './study.service';
 import { CreateStudyDto } from './dto/create-study.dto';
 import { UpdateStudyDto } from './dto/update-study.dto';
+import UsersService from '../users/users.service';
 
 @Controller('study')
 export class StudyController {
-  constructor(private readonly studyService: StudyService) {}
+  constructor(
+    private readonly studyService: StudyService,
+    private readonly usersService: UsersService,
+  ) {}
 
   @Post()
-  create(@Body() createStudyDto: CreateStudyDto) {
-    return this.studyService.create(createStudyDto);
+  async createStudy(
+    @Headers('Authorization') authHeader: string,
+    @Body() createStudyDto: CreateStudyDto,
+    @Res() res,
+  ): Promise<void> {
+    const { userid } = await this.usersService.getProfile(authHeader);
+    createStudyDto.teacher = userid;
+    const study = await this.studyService.create(createStudyDto);
+    res.status(HttpStatus.CREATED).send(study);
   }
 
-  @Get()
-  findAll() {
-    return this.studyService.findAll();
-  }
+  // @Post()
+  // create(@Body() createStudyDto: CreateStudyDto) {
+  //   return this.studyService.create(createStudyDto);
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.studyService.findOne(+id);
-  }
+  // @Get()
+  // findAll() {
+  //   return this.studyService.findAll();
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStudyDto: UpdateStudyDto) {
-    return this.studyService.update(+id, updateStudyDto);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.studyService.findOne(+id);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.studyService.remove(+id);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateStudyDto: UpdateStudyDto) {
+  //   return this.studyService.update(+id, updateStudyDto);
+  // }
+
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.studyService.remove(+id);
+  // }
 }

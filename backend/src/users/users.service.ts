@@ -127,7 +127,7 @@ export default class UserService {
       throw new HttpException('인증에 실패하였습니다.', HttpStatus.BAD_REQUEST);
     }
 
-    const userId = payload.id;
+    const userId = payload.userid;
     const user = await this.findById(userId);
     return user;
   }
