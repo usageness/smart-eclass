@@ -34,14 +34,17 @@ export class StudyController {
     res.status(HttpStatus.CREATED).send(study);
   }
 
+  @Get()
+  async findAll(@Headers('Authorization') authHeader: string, @Res() res) {
+    const { userid } = await this.usersService.getProfile(authHeader);
+
+    const study = await this.studyService.findAll({ userid });
+    res.status(HttpStatus.CREATED).send(study);
+  }
+
   // @Post()
   // create(@Body() createStudyDto: CreateStudyDto) {
   //   return this.studyService.create(createStudyDto);
-  // }
-
-  // @Get()
-  // findAll() {
-  //   return this.studyService.findAll();
   // }
 
   // @Get(':id')
