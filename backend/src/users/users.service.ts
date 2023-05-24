@@ -119,4 +119,16 @@ export default class UserService {
 
     return userById;
   }
+
+  async getProfile(token: string): Promise<User> {
+    const payload = this.jwtService.verify(token);
+
+    if (!payload) {
+      throw new HttpException('인증에 실패하였습니다.', HttpStatus.BAD_REQUEST);
+    }
+
+    const userId = payload.id;
+    const user = await this.findById(userId);
+    return user;
+  }
 }

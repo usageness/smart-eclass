@@ -19,8 +19,9 @@ export default class UserController {
   constructor(private readonly usersService: UsersService) {}
 
   @Post('/signup')
-  async createUser(@Body() dto: CreateUserDto): Promise<void> {
-    await this.usersService.createUser(dto);
+  async createUser(@Body() dto: CreateUserDto, @Res() res): Promise<void> {
+    const user = await this.usersService.createUser(dto);
+    res.status(HttpStatus.CREATED).send(user);
   }
 
   @Post('/login')
@@ -32,11 +33,13 @@ export default class UserController {
     res.status(HttpStatus.OK).send(user);
   }
 
-  // @Get('/me')
-  // @UseGuards(AuthGuard('jwt'))
-  // async getProfile(
-  //   @Headers('authorization') authHeader: string,
-  // ): Promise<User> {
-  //   return this.authService.validateToken(authHeader);
-  // }
+  @Get('/me')
+  async getProfile(
+    @Headers('Authorization') authHeader: string,
+    @Res() res,
+  ): Promise<void> {
+    const user = await this.usersService.getProfile(authHeader);
+
+    res.status(HttpStatus.OK).send(user);
+  }
 }
