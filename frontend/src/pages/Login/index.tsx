@@ -1,13 +1,14 @@
+import { Link, useNavigate } from 'react-router-dom';
 import { requestLogin } from 'apis/request/auth';
 import useAuth from 'hooks/useAuth';
 import useInput from 'hooks/useInput';
-import { Link } from 'react-router-dom';
 import * as S from './styles';
 
 function Login() {
   const [id, setId] = useInput('');
   const [password, setPassword] = useInput('');
   const { setAuth, setLogin } = useAuth();
+  const navigate = useNavigate();
 
   const login = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -18,6 +19,7 @@ function Login() {
       .then(({ username, accessToken }) => {
         setAuth(accessToken);
         setLogin({ id, nickname: username });
+        navigate('/');
         alert(`${username}님, 환영합니다!`);
       })
       .catch(error => {

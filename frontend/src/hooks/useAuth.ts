@@ -22,6 +22,7 @@ const useAuth = () => {
 
   const resetAuth = () => {
     resetLoginInfo();
+    localStorage.removeItem('accessToken');
   };
 
   return {

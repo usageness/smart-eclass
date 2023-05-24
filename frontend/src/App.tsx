@@ -8,15 +8,15 @@ import GlobalStyles from 'styles/GlobalStyles';
 function App() {
   return (
     <Router>
-      <Layouts>
-        <GlobalStyles />
-        <RecoilRoot>
+      <RecoilRoot>
+        <Layouts>
+          <GlobalStyles />
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/Login" element={<Login />} />
           </Routes>
-        </RecoilRoot>
-      </Layouts>
+        </Layouts>
+      </RecoilRoot>
     </Router>
   );
 }
