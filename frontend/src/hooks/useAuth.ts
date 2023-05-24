@@ -9,8 +9,8 @@ const useAuth = () => {
   const [{ isLogin, user }, setLoginInfo] = useRecoilState(loginState);
   const resetLoginInfo = useResetRecoilState(loginState);
 
-  const setAuth = (accessToken: Token) => {
-    localStorage.setItem('accessToken', JSON.stringify(accessToken));
+  const setAuth = ({ accessToken }: Token) => {
+    localStorage.setItem('accessToken', accessToken.toString());
   };
 
   const setLogin = (userInfo: UserProfile) => {

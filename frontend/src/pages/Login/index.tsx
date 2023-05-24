@@ -17,12 +17,13 @@ function Login() {
 
     requestLogin({ id, password })
       .then(({ username, accessToken }) => {
-        setAuth(accessToken);
+        setAuth({ accessToken });
         setLogin({ id, nickname: username });
         navigate('/');
         alert(`${username}님, 환영합니다!`);
       })
       .catch(error => {
+        console.log(error);
         alert(error.response.data.message);
       });
   };

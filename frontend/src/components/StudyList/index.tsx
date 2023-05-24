@@ -1,12 +1,19 @@
+import { study } from 'types/study';
 import * as S from './styles';
 
-function StudyList() {
+interface StudyList {
+  data: Array<study>;
+}
+
+function StudyList({ data }: StudyList) {
   return (
     <S.Container>
-      <S.Study>코딩테스트 준비</S.Study>
-      <S.Study2>알고리즘 학습</S.Study2>
-      <S.Study>네트워크 심화반</S.Study>
-      <S.Study2>자소서 특강</S.Study2>
+      {data.map(({ studyname, teacher }) => (
+        <S.Study>
+          <S.Title>{studyname}</S.Title>
+          <S.Teacher>{teacher}</S.Teacher>
+        </S.Study>
+      ))}
     </S.Container>
   );
 }

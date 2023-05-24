@@ -22,4 +22,11 @@ const Contents = styled.div`
   width: 100%;
 `;
 
-export { Container, Contents };
+const HeaderContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 1.5rem;
+  width: 60%;
+`;
+
+export { Container, Contents, HeaderContainer };

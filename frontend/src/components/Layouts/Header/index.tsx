@@ -11,11 +11,12 @@ function Header() {
         <S.Contents>
           <Link to="/">SMART ECLASS</Link>
           {isLogin ? (
-            <>
+            <S.HeaderContainer>
+              <Link to="/study">내 강의</Link>
               <Link to="#" onClick={() => resetAuth()}>
                 로그아웃
               </Link>
-            </>
+            </S.HeaderContainer>
           ) : (
             <Link to="/login">로그인</Link>
           )}

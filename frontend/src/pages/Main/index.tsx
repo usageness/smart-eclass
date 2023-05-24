@@ -17,7 +17,7 @@ function Main() {
         </S.SampleNotice>
       </S.Notice>
       <S.Title>진행중인 스터디</S.Title>
-      <StudyList />
+      {/* <StudyList /> */}
     </S.Container>
   );
 }

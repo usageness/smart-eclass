@@ -12,11 +12,13 @@ const Container = styled.div`
 `;
 
 const Study = styled.div`
+  display: flex;
+  flex-direction: column;
+
   width: 13rem;
   height: 100%;
 
   color: #ffffff;
-  font-size: 1.25rem;
 
   padding: 2rem 1.5rem;
 
@@ -27,6 +29,14 @@ const Study = styled.div`
   );
   border-radius: 1rem;
   box-shadow: 0.5rem 0.5rem 1rem #00000025;
+`;
+
+const Title = styled.h3`
+  font-size: 1.25rem;
+`;
+
+const Teacher = styled.h3`
+  font-size: 1rem;
 `;
 
 const Study2 = styled.div`
@@ -47,4 +57,4 @@ const Study2 = styled.div`
   box-shadow: 0.5rem 0.5rem 1rem #00000025;
 `;
 
-export { Container, Study, Study2 };
+export { Container, Study, Title, Teacher, Study2 };
