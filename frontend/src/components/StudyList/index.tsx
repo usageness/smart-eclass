@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { study } from 'types/study';
 import * as S from './styles';
 
@@ -8,11 +9,13 @@ interface StudyList {
 function StudyList({ data }: StudyList) {
   return (
     <S.Container>
-      {data.map(({ studyname, teacher }) => (
-        <S.Study key={studyname}>
-          <S.Title>{studyname}</S.Title>
-          <S.Teacher>{teacher}</S.Teacher>
-        </S.Study>
+      {data.map(({ id, studyname, teacher }) => (
+        <Link to={`/study/${id}`}>
+          <S.Study key={studyname}>
+            <S.Title>{studyname}</S.Title>
+            <S.Teacher>{teacher}</S.Teacher>
+          </S.Study>
+        </Link>
       ))}
     </S.Container>
   );

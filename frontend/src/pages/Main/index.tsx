@@ -1,8 +1,26 @@
 import * as S from './styles';
-import StudyList from 'components/StudyList';
+import { useState, useEffect } from 'react';
 import Books from 'assets/books.png';
+import { requestAllStudy } from 'apis/request/study';
+import { study } from 'types/study';
+import StudyList from 'components/StudyList';
 
 function Main() {
+  const [studyList, setStudyList] = useState<null | Array<study>>(null);
+
+  const getAllStudyList = () => {
+    requestAllStudy()
+      .then(data => {
+        setStudyList(data);
+      })
+      .catch(error => {
+        alert(error.response.data.message);
+      });
+  };
+
+  useEffect(() => {
+    getAllStudyList();
+  }, []);
   return (
     <S.Container>
       <S.Notice>
@@ -16,8 +34,8 @@ function Main() {
           </S.NoticeDiv>
         </S.SampleNotice>
       </S.Notice>
-      <S.Title>진행중인 스터디</S.Title>
-      {/* <StudyList /> */}
+      <S.Title>진행중인 스터디들을 살펴보세요✨</S.Title>
+      {studyList && <StudyList data={studyList} />}
     </S.Container>
   );
 }
