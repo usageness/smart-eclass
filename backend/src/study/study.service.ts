@@ -33,7 +33,7 @@ export class StudyService {
     return newStudy;
   }
 
-  async findAll({ userid }: GetStudyDto) {
+  async findMyAll({ userid }: GetStudyDto) {
     const studyInTeacher = await this.studyRepository.find({
       where: { teacher: userid },
     });
@@ -42,6 +42,12 @@ export class StudyService {
     });
 
     return { teacher: studyInTeacher, students: studyInStudents };
+  }
+
+  async findAll() {
+    const entireStudy = await this.studyRepository.find();
+
+    return entireStudy;
   }
 
   async findOne(id: number) {

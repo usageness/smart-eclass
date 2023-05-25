@@ -35,11 +35,17 @@ export class StudyController {
     res.status(HttpStatus.CREATED).send(study);
   }
 
+  @Get('/all')
+  async findAll(@Res() res) {
+    const study = await this.studyService.findAll();
+    res.status(HttpStatus.OK).send(study);
+  }
+
   @Get()
-  async findAll(@Headers('Authorization') authHeader: string, @Res() res) {
+  async findMyAll(@Headers('Authorization') authHeader: string, @Res() res) {
     const { userid } = await this.usersService.getProfile(authHeader);
 
-    const study = await this.studyService.findAll({ userid });
+    const study = await this.studyService.findMyAll({ userid });
     res.status(HttpStatus.OK).send(study);
   }
 
