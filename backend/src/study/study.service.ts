@@ -11,7 +11,7 @@ import { Study } from './entities/study.entity';
 export class StudyService {
   constructor(
     @InjectRepository(Study)
-    private usersRepository: Repository<Study>,
+    private studyRepository: Repository<Study>,
   ) {}
 
   async create({
@@ -21,32 +21,33 @@ export class StudyService {
     comments = '',
     isopen = true,
   }: CreateStudyDto) {
-    const newStudy = await this.usersRepository.create({
+    const newStudy = await this.studyRepository.create({
       studyname,
       teacher,
       students,
       comments,
       isopen,
     });
-    await this.usersRepository.save(newStudy);
+    await this.studyRepository.save(newStudy);
 
     return newStudy;
   }
 
   async findAll({ userid }: GetStudyDto) {
-    const studyInTeacher = await this.usersRepository.find({
+    const studyInTeacher = await this.studyRepository.find({
       where: { teacher: userid },
     });
-    const studyInStudents = await this.usersRepository.find({
+    const studyInStudents = await this.studyRepository.find({
       where: { students: userid },
     });
 
     return { teacher: studyInTeacher, students: studyInStudents };
   }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} study`;
-  // }
+  async findOne(id: number) {
+    const study = await this.studyRepository.findOne({ where: { id } });
+    return study;
+  }
 
   // update(id: number, updateStudyDto: UpdateStudyDto) {
   //   return `This action updates a #${id} study`;

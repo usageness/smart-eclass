@@ -9,6 +9,7 @@ import {
   Headers,
   Res,
   HttpStatus,
+  ConsoleLogger,
 } from '@nestjs/common';
 import { StudyService } from './study.service';
 import { CreateStudyDto } from './dto/create-study.dto';
@@ -39,17 +40,18 @@ export class StudyController {
     const { userid } = await this.usersService.getProfile(authHeader);
 
     const study = await this.studyService.findAll({ userid });
-    res.status(HttpStatus.CREATED).send(study);
+    res.status(HttpStatus.OK).send(study);
+  }
+
+  @Get(':id')
+  async findOne(@Param('id') id: string, @Res() res) {
+    const study = await this.studyService.findOne(+id);
+    res.status(HttpStatus.OK).send(study);
   }
 
   // @Post()
   // create(@Body() createStudyDto: CreateStudyDto) {
   //   return this.studyService.create(createStudyDto);
-  // }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.studyService.findOne(+id);
   // }
 
   // @Patch(':id')
