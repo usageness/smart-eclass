@@ -1,6 +1,7 @@
 import Layouts from 'components/Layouts';
 import Login from 'pages/Login';
 import Main from 'pages/Main';
+import Signup from 'pages/Signup';
 import Study from 'pages/Study';
 import StudyDetail from 'pages/StudyDetail';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -16,6 +17,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/Login" element={<Login />} />
+            <Route path="/Signup" element={<Signup />} />
             <Route path="/Study">
               <Route index element={<Study />} />
               <Route path=":id" element={<StudyDetail />} />

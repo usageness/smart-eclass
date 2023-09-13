@@ -15,10 +15,10 @@ function Login() {
 
     if (!id || !password) alert('아이디와 비밀번호를 입력해주세요');
 
-    requestLogin({ id, password })
+    requestLogin({ userid: id, password })
       .then(({ username, accessToken }) => {
         setAuth({ accessToken });
-        setLogin({ id, nickname: username });
+        setLogin({ userid: id, username });
         navigate('/');
         alert(`${username}님, 환영합니다!`);
       })

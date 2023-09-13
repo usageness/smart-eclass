@@ -1,8 +1,8 @@
 interface User {
-  id: string;
+  userid: string;
   password: string;
-  nickname: string;
+  username: string;
 }
 
-type UserLogin = Omit<User, 'nickname'>;
+type UserLogin = Omit<User, 'username'>;
 type UserProfile = Omit<User, 'password'>;
