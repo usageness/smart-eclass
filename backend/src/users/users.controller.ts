@@ -26,9 +26,9 @@ export default class UserController {
 
   @Post('/login')
   async login(@Body() dto: UsersLoginDto, @Res() res): Promise<void> {
-    const { id, password } = dto;
+    const { userid, password } = dto;
 
-    const user = await this.usersService.login(id, password);
+    const user = await this.usersService.login(userid, password);
 
     res.status(HttpStatus.OK).send(user);
   }

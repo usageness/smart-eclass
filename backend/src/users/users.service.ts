@@ -70,7 +70,7 @@ export default class UserService {
       userid,
       password: hashedPassword,
       username,
-      privilege: '1',
+      privilege: '0',
     });
     await this.usersRepository.save(newUser);
 
