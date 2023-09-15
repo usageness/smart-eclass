@@ -17,8 +17,9 @@ export class StudyService {
   async create({
     studyname,
     teacher,
-    students = '',
+    students = '[]',
     comments = '',
+    introduction = '',
     isopen = true,
   }: CreateStudyDto) {
     const newStudy = await this.studyRepository.create({
@@ -26,6 +27,7 @@ export class StudyService {
       teacher,
       students,
       comments,
+      introduction,
       isopen,
     });
     await this.studyRepository.save(newStudy);

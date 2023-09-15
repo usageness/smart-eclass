@@ -3,5 +3,6 @@ export class CreateStudyDto {
   teacher: string;
   students: string;
   comments: string;
-  isopen: boolean;
+  introduction: string;
+  isopen?: boolean;
 }

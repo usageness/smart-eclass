@@ -12,6 +12,12 @@ export class Study {
   teacher: string;
 
   @Column()
+  introduction: string;
+
+  @Column()
+  class: string;
+
+  @Column()
   students: string;
 
   @Column()
