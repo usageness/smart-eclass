@@ -18,7 +18,6 @@ export class StudyService {
     studyname,
     teacher,
     students = '[]',
-    comments = '',
     introduction = '',
     isopen = true,
   }: CreateStudyDto) {
@@ -26,7 +25,6 @@ export class StudyService {
       studyname,
       teacher,
       students,
-      comments,
       introduction,
       class: '[]',
       isopen,

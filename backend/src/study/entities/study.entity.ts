@@ -21,8 +21,5 @@ export class Study {
   students: string;
 
   @Column()
-  comments: string;
-
-  @Column()
   isopen: boolean;
 }
