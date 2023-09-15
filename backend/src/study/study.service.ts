@@ -28,6 +28,7 @@ export class StudyService {
       students,
       comments,
       introduction,
+      class: '[]',
       isopen,
     });
     await this.studyRepository.save(newStudy);
