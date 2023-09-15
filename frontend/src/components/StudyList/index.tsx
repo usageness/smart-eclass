@@ -10,7 +10,7 @@ function StudyList({ data }: StudyList) {
   return (
     <S.Container>
       {data.map(({ id, studyname, teacher }) => (
-        <Link to={`/study/${id}`}>
+        <Link to={`/study/${id}`} key={id}>
           <S.Study key={studyname}>
             <S.Title>{studyname}</S.Title>
             <S.Teacher>{teacher}</S.Teacher>

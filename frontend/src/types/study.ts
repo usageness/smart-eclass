@@ -9,5 +9,7 @@ export interface study {
   teacher: string;
   students: string;
   comments: string;
+  introduction: string;
+  class: string;
   isopen: boolean;
 }

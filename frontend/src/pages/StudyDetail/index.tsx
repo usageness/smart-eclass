@@ -43,8 +43,7 @@ function StudyDetail() {
               </S.TeacherContainer>
             </S.CardHeader>
             <S.Content>
-              <p>이 아래에는 스터디에 대한 설명을 입력해주세요.</p>
-              <p>텍스트는 추후에 변경할 수 있습니다.</p>
+              <S.Introduction>{study.introduction}</S.Introduction>
               {study.students}
               {study.comments}
             </S.Content>

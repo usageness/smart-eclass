@@ -18,7 +18,6 @@ const Container = styled.div`
 const Card = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
 
   border-radius: 10px;
   backdrop-filter: blur(0.6rem);
@@ -51,6 +50,11 @@ const Content = styled.div`
   min-height: 50vh;
 
   padding: 2rem;
+
+  h3 {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
 `;
 
 const Title = styled.h1`
@@ -80,6 +84,16 @@ const Emblem = styled.span`
   background: linear-gradient(45deg, #f4791f, #659999);
 `;
 
+const Introduction = styled.div`
+  width: 100%;
+
+  padding: 2rem;
+  border-radius: 10px;
+  border: 1px solid #eeeeee;
+
+  color: #111111;
+`;
+
 export {
   Container,
   Card,
@@ -90,4 +104,5 @@ export {
   IsOpen,
   TeacherContainer,
   Emblem,
+  Introduction,
 };
