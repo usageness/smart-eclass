@@ -55,6 +55,18 @@ export class StudyController {
     res.status(HttpStatus.OK).send(study);
   }
 
+  @Post('/join/:id')
+  async join(
+    @Headers('Authorization') authHeader: string,
+    @Param('id') id: number,
+    @Res() res,
+  ) {
+    const { userid } = await this.usersService.getProfile(authHeader);
+
+    const study = await this.studyService.join({ userid, id });
+    res.status(HttpStatus.OK).send(study);
+  }
+
   // @Post()
   // create(@Body() createStudyDto: CreateStudyDto) {
   //   return this.studyService.create(createStudyDto);
