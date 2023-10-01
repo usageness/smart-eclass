@@ -1,3 +1,5 @@
+import { requestValidateToken } from 'apis/request/auth';
+import { useEffect } from 'react';
 import { useResetRecoilState, useRecoilState } from 'recoil';
 import { loginState } from 'store/states';
 
@@ -8,6 +10,21 @@ interface Token {
 const useAuth = () => {
   const [{ isLogin, user }, setLoginInfo] = useRecoilState(loginState);
   const resetLoginInfo = useResetRecoilState(loginState);
+
+  useEffect(() => {
+    const token = localStorage.getItem('accessToken');
+    if (!token) return;
+    const checkUserTokenValidate = async () => {
+      const userInfo = (await requestValidateToken()) as UserInfomation;
+      if (!userInfo) {
+        localStorage.removeItem('accessToken');
+        return;
+      }
+      setLogin({ userid: userInfo.userid, username: userInfo.username });
+    };
+
+    checkUserTokenValidate();
+  }, []);
 
   const setAuth = ({ accessToken }: Token) => {
     localStorage.setItem('accessToken', accessToken.toString());
