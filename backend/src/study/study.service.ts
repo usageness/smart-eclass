@@ -39,9 +39,14 @@ export class StudyService {
     const studyInTeacher = await this.studyRepository.find({
       where: { teacher: userid },
     });
-    const studyInStudents = await this.studyRepository.find({
-      where: { students: userid },
-    });
+    // const studyInStudents = await this.studyRepository.find({
+    //   where: { students: userid },
+    // });
+
+    const studyInStudents = await this.studyRepository
+      .createQueryBuilder('study')
+      .where('study.students LIKE :studentName', { studentName: `%${userid}%` })
+      .getMany();
 
     return { teacher: studyInTeacher, students: studyInStudents };
   }
