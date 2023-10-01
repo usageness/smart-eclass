@@ -36,6 +36,28 @@ const CardHeader = styled.div`
   background-color: #444444;
 `;
 
+const CardFooter = styled.div`
+  display: flex;
+  justify-content: center;
+
+  padding: 1rem;
+`;
+
+const JoinButton = styled.button`
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.1rem;
+
+  border-radius: 10px;
+  background: radial-gradient(
+    circle farthest-corner at 10% 10%,
+    rgba(123, 142, 255, 0.9) 40%,
+    rgba(116, 182, 247, 0.9) 90%
+  );
+
+  padding: 1rem 3rem;
+`;
+
 const TitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -45,7 +67,7 @@ const TitleContainer = styled.div`
 const Content = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 2rem;
 
   min-height: 50vh;
 
@@ -98,6 +120,8 @@ export {
   Container,
   Card,
   CardHeader,
+  CardFooter,
+  JoinButton,
   Content,
   TitleContainer,
   Title,

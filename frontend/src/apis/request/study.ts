@@ -13,4 +13,8 @@ const requestGetStudy = (id: string): Promise<study> => {
   return axiosWithAccessToken.get(`/study/${id}`).then(res => res.data);
 };
 
-export { requestAllStudy, requestStudy, requestGetStudy };
+const requestJoinStudy = (id: string): Promise<any> => {
+  return axiosWithAccessToken.post(`/study/join/${id}`).then(res => res.data);
+};
+
+export { requestAllStudy, requestStudy, requestGetStudy, requestJoinStudy };
