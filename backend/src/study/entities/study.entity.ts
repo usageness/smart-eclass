@@ -14,7 +14,7 @@ export class Study {
   @Column()
   introduction: string;
 
-  @Column()
+  @Column('text')
   class: string;
 
   @Column()
