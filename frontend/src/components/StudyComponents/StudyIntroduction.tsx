@@ -1,30 +1,17 @@
 import * as S from './styles';
-import { useEffect, useState } from 'react';
-import { requestGetStudy, requestJoinStudy } from 'apis/request/study';
+import { requestJoinStudy } from 'apis/request/study';
 import { useParams } from 'react-router-dom';
 import { study } from 'types/study';
 import Comments from 'components/Comments';
 import useAuth from 'hooks/useAuth';
 
-function StudyDetail() {
-  const [study, setStudy] = useState<null | study>(null);
-  const [isStudying, setIsStudying] = useState(false);
+interface StudyIntroductionProps {
+  study: study;
+}
+
+function StudyIntroduction({ study }: StudyIntroductionProps) {
   const { id } = useParams();
   const { isLogin, user } = useAuth();
-
-  const getStudy = () => {
-    if (!id) {
-      return;
-    }
-
-    requestGetStudy(id)
-      .then(data => {
-        setStudy(data);
-      })
-      .catch(error => {
-        alert(error.response.data.message);
-      });
-  };
 
   const joinStudy = () => {
     if (!isLogin || !id) {
@@ -38,24 +25,6 @@ function StudyDetail() {
         alert(error.response.data.message);
       });
   };
-
-  useEffect(() => {
-    getStudy();
-  }, []);
-
-  useEffect(() => {
-    if (!study || !user) {
-      setIsStudying(false);
-      return;
-    }
-
-    const students = JSON.parse(study.students) as Array<string>;
-
-    if (students.includes(user.userid)) {
-      setIsStudying(true);
-    }
-    console.log(isStudying);
-  }, [study]);
 
   if (!study) return <p>loading</p>;
 
@@ -79,15 +48,11 @@ function StudyDetail() {
           <Comments commentList={study.comments} />
         </S.Content>
         <S.CardFooter>
-          {!isStudying ? (
-            <S.JoinButton onClick={joinStudy}>수강하기</S.JoinButton>
-          ) : (
-            <p>수강중인 스터디입니다.</p>
-          )}
+          <S.JoinButton onClick={joinStudy}>수강하기</S.JoinButton>
         </S.CardFooter>
       </S.Card>
     </S.Container>
   );
 }
 
-export default StudyDetail;
+export default StudyIntroduction;
