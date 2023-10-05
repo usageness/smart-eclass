@@ -1,11 +1,15 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateStudyDto } from './dto/create-study.dto';
 import { GetStudyDto } from './dto/get-study.dto';
 import { JoinStudyDto } from './dto/join-study.dto';
-import { UpdateStudyDto } from './dto/update-study.dto';
+import { UpdateClassDto } from './dto/update-class.dto';
 import { Study } from './entities/study.entity';
 
 @Injectable()
@@ -78,9 +82,21 @@ export class StudyService {
     return joinedStudy;
   }
 
-  // update(id: number, updateStudyDto: UpdateStudyDto) {
-  //   return `This action updates a #${id} study`;
-  // }
+  async updateClass({ userid, id, stringifyClass }: UpdateClassDto) {
+    const targetStudy = await this.studyRepository.findOne({
+      where: { id },
+    });
+
+    if (!targetStudy.teacher.includes(userid)) {
+      throw new UnauthorizedException('해당 스터디에 대한 권한이 없습니다.');
+    }
+
+    targetStudy.class = stringifyClass;
+
+    const updatedStudy = await this.studyRepository.update(id, targetStudy);
+
+    return updatedStudy;
+  }
 
   // remove(id: number) {
   //   return `This action removes a #${id} study`;

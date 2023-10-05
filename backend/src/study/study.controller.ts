@@ -13,7 +13,7 @@ import {
 } from '@nestjs/common';
 import { StudyService } from './study.service';
 import { CreateStudyDto } from './dto/create-study.dto';
-import { UpdateStudyDto } from './dto/update-study.dto';
+import { UpdateClassDto } from './dto/update-class.dto';
 import UsersService from '../users/users.service';
 
 @Controller('study')
@@ -67,14 +67,26 @@ export class StudyController {
     res.status(HttpStatus.OK).send(study);
   }
 
+  @Patch(':id')
+  async update(
+    @Headers('Authorization') authHeader: string,
+    @Param('id') id: number,
+    @Body() { stringifyClass }: UpdateClassDto,
+    @Res() res,
+  ) {
+    const { userid } = await this.usersService.getProfile(authHeader);
+
+    const study = await this.studyService.updateClass({
+      userid,
+      id,
+      stringifyClass,
+    });
+    res.status(HttpStatus.OK).send(study);
+  }
+
   // @Post()
   // create(@Body() createStudyDto: CreateStudyDto) {
   //   return this.studyService.create(createStudyDto);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateStudyDto: UpdateStudyDto) {
-  //   return this.studyService.update(+id, updateStudyDto);
   // }
 
   // @Delete(':id')
