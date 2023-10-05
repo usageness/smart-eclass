@@ -28,6 +28,7 @@ const ChapterItem = styled.button`
 `;
 
 const ChapterContents = styled.div`
+  max-width: 80%;
   padding: 1rem;
 
   color: #222222;
