@@ -13,3 +13,18 @@ export interface study {
   class: string;
   isopen: boolean;
 }
+
+export interface StudyChapterProps {
+  chapterTitle: string;
+  chapterList: Array<StudySubjectProps>;
+}
+
+export interface StudySubjectProps {
+  subTitle: string;
+  content: string;
+}
+
+export interface StudyIndexProps {
+  chapterIndex: number;
+  subIndex: number;
+}

@@ -1,8 +1,15 @@
 import * as S from './styles';
 import { useParams } from 'react-router-dom';
-import { study } from 'types/study';
+import {
+  study,
+  StudyChapterProps,
+  StudyIndexProps,
+  StudySubjectProps,
+} from 'types/study';
 import useAuth from 'hooks/useAuth';
-import StudyContents from './StudyContents';
+import Markdown from 'react-markdown';
+import { useState } from 'react';
+import ContentsIndex from './ContentsIndex';
 
 interface StudyDetailProps {
   study: study;
@@ -11,6 +18,16 @@ interface StudyDetailProps {
 function StudyDetail({ study }: StudyDetailProps) {
   const { id } = useParams();
   const { isLogin, user } = useAuth();
+  const [content, setContent] = useState('');
+  const [currentDocument, setCurrentDocument] = useState<string | null>(null);
+  const parsedContents = JSON.parse(study.class) as Array<StudyChapterProps>;
+
+  const viewContent = ({ chapterIndex, subIndex }: StudyIndexProps) => {
+    setContent(parsedContents[chapterIndex].chapterList[subIndex].content);
+    setCurrentDocument(
+      parsedContents[chapterIndex].chapterList[subIndex].subTitle,
+    );
+  };
 
   if (!study) return <p>loading</p>;
 
@@ -28,8 +45,33 @@ function StudyDetail({ study }: StudyDetailProps) {
           </S.TeacherContainer>
         </S.CardHeader>
         <S.Content>
-          <h3>컨텐츠</h3>
-          <StudyContents contents={study.class} />
+          {currentDocument ? (
+            <>
+              <span>
+                <h3>
+                  <S.BackwardButton onClick={() => setCurrentDocument(null)}>
+                    ←
+                  </S.BackwardButton>
+                  {currentDocument}
+                </h3>
+              </span>
+              <S.ChapterContainer>
+                <S.ChapterContents>
+                  <Markdown>{content}</Markdown>
+                </S.ChapterContents>
+              </S.ChapterContainer>
+            </>
+          ) : (
+            <>
+              <h3>컨텐츠</h3>
+              <S.ChapterContainer>
+                <ContentsIndex
+                  parsedContents={parsedContents}
+                  viewContent={viewContent}
+                />
+              </S.ChapterContainer>
+            </>
+          )}
         </S.Content>
         <S.CardFooter></S.CardFooter>
       </S.Card>

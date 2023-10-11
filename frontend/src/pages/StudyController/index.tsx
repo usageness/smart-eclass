@@ -19,6 +19,7 @@ function StudyController() {
     requestGetStudy(id)
       .then(data => {
         setStudy(data);
+        console.log(data);
       })
       .catch(error => {
         alert(error.response.data.message);

@@ -116,6 +116,68 @@ const Introduction = styled.div`
   color: #111111;
 `;
 
+const BackwardButton = styled.button`
+  font-size: 1.6rem;
+  font-weight: bold;
+  line-height: 1.6rem;
+  margin-right: 1rem;
+`;
+
+const ChapterContainer = styled.div`
+  display: flex;
+`;
+
+const ChapterWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ChapterTable = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
+
+const ChapterHead = styled.div`
+  background-color: #eeeeee;
+  font-weight: bold;
+
+  padding: 1rem;
+
+  border-radius: 10px 10px 0 0;
+  border: solid 1px #cccccc;
+`;
+
+const ChapterItem = styled.button`
+  font-size: 1rem;
+  padding: 1rem;
+
+  border: solid 1px #cccccc;
+  border-top: none;
+
+  &:last-of-type {
+    border-radius: 0 0 10px 10px;
+  }
+`;
+
+const ChapterContents = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  max-width: 80%;
+  padding: 1rem;
+
+  color: #222222;
+
+  ul {
+    list-style: inside;
+  }
+
+  li {
+    margin: 0.5rem;
+  }
+`;
+
 export {
   Container,
   Card,
@@ -129,4 +191,11 @@ export {
   TeacherContainer,
   Emblem,
   Introduction,
+  BackwardButton,
+  ChapterContainer,
+  ChapterTable,
+  ChapterWrapper,
+  ChapterHead,
+  ChapterItem,
+  ChapterContents,
 };
