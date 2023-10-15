@@ -39,6 +39,37 @@ const MarkdownStyle = styled.div`
     font-weight: bold;
     margin: 1rem 0;
   }
+
+  strong {
+    font-weight: bold;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  img {
+    max-width: 100%;
+  }
+
+  a {
+    color: #0055ff;
+
+    &:hover {
+      color: #00aaff;
+    }
+  }
+
+  pre {
+    border-radius: 15px;
+    background-color: #eeeeee;
+    padding: 1rem;
+  }
+
+  hr {
+    width: 100%;
+    background-color: #333333;
+  }
 `;
 
 export { MarkdownStyle };

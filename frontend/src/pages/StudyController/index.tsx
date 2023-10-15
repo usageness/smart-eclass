@@ -8,6 +8,8 @@ import { StudyDetail, StudyIntroduction } from 'components/StudyComponents';
 function StudyController() {
   const [study, setStudy] = useState<null | study>(null);
   const [isStudying, setIsStudying] = useState(false);
+  const [isTeacher, setIsTeacher] = useState(false);
+  const [isStale, setIsStale] = useState(false);
   const { id } = useParams();
   const { user } = useAuth();
 
@@ -26,13 +28,19 @@ function StudyController() {
       });
   };
 
+  const getDataStale = () => {
+    setIsStale(true);
+  };
+
   useEffect(() => {
     getStudy();
-  }, []);
+    setIsStale(false);
+  }, [isStale]);
 
   useEffect(() => {
     if (!study || !user) {
       setIsStudying(false);
+      setIsTeacher(false);
       return;
     }
 
@@ -41,6 +49,11 @@ function StudyController() {
     if (students.includes(user.userid)) {
       setIsStudying(true);
     }
+
+    if (study.teacher === user.userid) {
+      setIsTeacher(true);
+    }
+
     console.log(isStudying);
   }, [study]);
 
@@ -49,7 +62,11 @@ function StudyController() {
   return (
     <>
       {isStudying ? (
-        <StudyDetail study={study} />
+        <StudyDetail
+          study={study}
+          isTeacher={isTeacher}
+          getDataStale={getDataStale}
+        />
       ) : (
         <StudyIntroduction study={study} />
       )}

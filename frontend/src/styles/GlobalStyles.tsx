@@ -35,12 +35,21 @@ const GlobalStyles = createGlobalStyle`
     input:focus {
       outline: none;
     }
+    textarea {
+      font-size: 1rem;
+      width: 100%;
+    }
 
     button {
       border: none;
       background: none;
       padding: 0;
       cursor: pointer;
+    }
+
+    li {
+      list-style: inside;
+      margin: 0.5rem;
     }
 `;
 

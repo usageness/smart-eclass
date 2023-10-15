@@ -17,4 +17,19 @@ const requestJoinStudy = (id: string): Promise<any> => {
   return axiosWithAccessToken.post(`/study/join/${id}`).then(res => res.data);
 };
 
-export { requestAllStudy, requestStudy, requestGetStudy, requestJoinStudy };
+const requestModifyStudyContents = (
+  id: string,
+  modifyData: { stringifyClass: string },
+): Promise<study> => {
+  return axiosWithAccessToken
+    .patch(`/study/${id}`, modifyData)
+    .then(res => res.data);
+};
+
+export {
+  requestAllStudy,
+  requestStudy,
+  requestGetStudy,
+  requestJoinStudy,
+  requestModifyStudyContents,
+};

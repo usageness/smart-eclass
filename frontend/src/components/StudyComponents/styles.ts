@@ -76,6 +76,17 @@ const Content = styled.div`
   h3 {
     font-size: 1.6rem;
     font-weight: bold;
+    line-height: 1.6rem;
+  }
+`;
+
+const DocumentHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > div {
+    display: flex;
   }
 `;
 
@@ -178,6 +189,12 @@ const ChapterContents = styled.div`
   }
 `;
 
+const ModifyButton = styled.button`
+  & > img {
+    width: 40px;
+  }
+`;
+
 export {
   Container,
   Card,
@@ -185,6 +202,7 @@ export {
   CardFooter,
   JoinButton,
   Content,
+  DocumentHeader,
   TitleContainer,
   Title,
   IsOpen,
@@ -198,4 +216,5 @@ export {
   ChapterHead,
   ChapterItem,
   ChapterContents,
+  ModifyButton,
 };
