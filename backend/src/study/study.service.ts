@@ -6,6 +6,7 @@ import {
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { CreateContentsClassDto } from './dto/addContents-class-dto';
 import { CreateStudyDto } from './dto/create-study.dto';
 import { GetStudyDto } from './dto/get-study.dto';
 import { JoinStudyDto } from './dto/join-study.dto';
@@ -98,7 +99,27 @@ export class StudyService {
     return updatedStudy;
   }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} study`;
-  // }
+  async createClassContents({
+    chapterIndex,
+    userid,
+    id,
+    stringifyContents,
+  }: CreateContentsClassDto) {
+    const targetStudy = await this.studyRepository.findOne({
+      where: { id },
+    });
+
+    if (!targetStudy.teacher.includes(userid)) {
+      throw new UnauthorizedException('해당 스터디에 대한 권한이 없습니다.');
+    }
+
+    const parsedContents = JSON.parse(targetStudy.class);
+    const newContents = JSON.parse(stringifyContents);
+
+    parsedContents[chapterIndex].chapterList.push(newContents);
+    targetStudy.class = JSON.stringify(parsedContents);
+
+    const updatedStudy = await this.studyRepository.update(id, targetStudy);
+    return updatedStudy;
+  }
 }

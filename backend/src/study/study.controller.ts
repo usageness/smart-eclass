@@ -5,16 +5,15 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   Headers,
   Res,
   HttpStatus,
-  ConsoleLogger,
 } from '@nestjs/common';
 import { StudyService } from './study.service';
 import { CreateStudyDto } from './dto/create-study.dto';
 import { UpdateClassDto } from './dto/update-class.dto';
 import UsersService from '../users/users.service';
+import { CreateContentsClassDto } from './dto/addContents-class-dto';
 
 @Controller('study')
 export class StudyController {
@@ -84,13 +83,21 @@ export class StudyController {
     res.status(HttpStatus.OK).send(study);
   }
 
-  // @Post()
-  // create(@Body() createStudyDto: CreateStudyDto) {
-  //   return this.studyService.create(createStudyDto);
-  // }
+  @Post('/contents/:id')
+  async createContents(
+    @Headers('Authorization') authHeader: string,
+    @Param('id') id: number,
+    @Body() { chapterIndex, stringifyContents }: CreateContentsClassDto,
+    @Res() res,
+  ) {
+    const { userid } = await this.usersService.getProfile(authHeader);
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.studyService.remove(+id);
-  // }
+    const classes = await this.studyService.createClassContents({
+      chapterIndex,
+      userid,
+      id,
+      stringifyContents,
+    });
+    res.status(HttpStatus.CREATED).send(classes);
+  }
 }
