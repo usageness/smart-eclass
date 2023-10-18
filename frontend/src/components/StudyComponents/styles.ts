@@ -165,7 +165,7 @@ const ChapterItem = styled.button`
   border: solid 1px #cccccc;
   border-top: none;
 
-  &:last-of-type {
+  &:nth-last-child(2) {
     border-radius: 0 0 10px 10px;
   }
 `;
@@ -195,6 +195,14 @@ const ModifyButton = styled.button`
   }
 `;
 
+const AddButton = styled.button`
+  margin-top: 0.5rem;
+
+  & > img {
+    width: 40px;
+  }
+`;
+
 export {
   Container,
   Card,
@@ -217,4 +225,5 @@ export {
   ChapterItem,
   ChapterContents,
   ModifyButton,
+  AddButton,
 };

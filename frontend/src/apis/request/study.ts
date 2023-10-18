@@ -26,10 +26,20 @@ const requestModifyStudyContents = (
     .then(res => res.data);
 };
 
+const requestAddStudyContents = (
+  id: string,
+  newData: { chapterIndex: number; stringifyContents: string },
+): Promise<study> => {
+  return axiosWithAccessToken
+    .post(`/study/contents/${id}`, newData)
+    .then(res => res.data);
+};
+
 export {
   requestAllStudy,
   requestStudy,
   requestGetStudy,
   requestJoinStudy,
   requestModifyStudyContents,
+  requestAddStudyContents,
 };

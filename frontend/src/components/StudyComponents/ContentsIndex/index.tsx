@@ -4,13 +4,21 @@ import {
   StudyIndexProps,
   StudySubjectProps,
 } from 'types/study';
+import Plus from 'assets/plus.svg';
 
 interface contentsIndexProps {
   parsedContents: StudyChapterProps[];
   viewContent: ({ chapterIndex, subIndex }: StudyIndexProps) => void;
+  isTeacher: boolean;
+  setModeAdd: (chapterIndex: number) => void;
 }
 
-function ContentsIndex({ parsedContents, viewContent }: contentsIndexProps) {
+function ContentsIndex({
+  parsedContents,
+  viewContent,
+  isTeacher,
+  setModeAdd,
+}: contentsIndexProps) {
   return (
     <S.ChapterTable>
       {parsedContents.map(
@@ -18,7 +26,7 @@ function ContentsIndex({ parsedContents, viewContent }: contentsIndexProps) {
           { chapterTitle, chapterList }: StudyChapterProps,
           chapterIndex: number,
         ) => (
-          <S.ChapterWrapper key={chapterTitle}>
+          <S.ChapterWrapper key={`${chapterTitle}${chapterIndex}`}>
             <S.ChapterHead>{chapterTitle}</S.ChapterHead>
             {chapterList.map(({ subTitle }: StudySubjectProps, subIndex) => (
               <S.ChapterItem
@@ -28,6 +36,13 @@ function ContentsIndex({ parsedContents, viewContent }: contentsIndexProps) {
                 <p>{subTitle}</p>
               </S.ChapterItem>
             ))}
+            {isTeacher ? (
+              <S.AddButton onClick={() => setModeAdd(chapterIndex)}>
+                <img src={Plus} alt="add content" />
+              </S.AddButton>
+            ) : (
+              <div />
+            )}
           </S.ChapterWrapper>
         ),
       )}

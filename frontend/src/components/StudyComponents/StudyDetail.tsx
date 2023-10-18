@@ -1,12 +1,16 @@
 import * as S from './styles';
 import MarkDown from 'components/Markdown';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { study, StudyChapterProps, StudyIndexProps } from 'types/study';
 import ContentsIndex from './ContentsIndex';
 import ModifyContents from './ModifyContents';
+import AddContents from './AddContents';
 import Pencil from 'assets/pencil.svg';
-import { requestModifyStudyContents } from 'apis/request/study';
+import {
+  requestAddStudyContents,
+  requestModifyStudyContents,
+} from 'apis/request/study';
 
 interface StudyDetailProps {
   study: study;
@@ -20,6 +24,12 @@ export interface modifyContentType {
   currentDocumentTitle: string;
 }
 
+export interface SubmitNewContentType {
+  chapterIndex: number;
+  title: string;
+  contents: string;
+}
+
 export interface currentDocumentData {
   chapterIndex: number;
   subIndex: number;
@@ -29,6 +39,7 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
   const { id } = useParams();
   const [content, setContent] = useState('');
   const [isModify, setIsModify] = useState(false);
+  const [isAddMode, setIsAddMode] = useState<null | number>(null);
   const [currentDocument, setCurrentDocument] = useState<string | null>(null);
   const [documentIndex, setDocumentIndex] =
     useState<currentDocumentData | null>(null);
@@ -53,6 +64,14 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
     setIsModify(false);
   };
 
+  const setModeAdd = (chapterIndex: number) => {
+    setIsAddMode(chapterIndex);
+  };
+
+  const setModeView = () => {
+    setIsAddMode(null);
+  };
+
   const submitModification = ({
     documentIndex,
     modifyContent,
@@ -63,8 +82,6 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
     parsedContents[chapterIndex].chapterList[subIndex].content = modifyContent;
     parsedContents[chapterIndex].chapterList[subIndex].subTitle =
       currentDocumentTitle;
-
-    console.log(JSON.stringify(parsedContents));
 
     requestModifyStudyContents(id, {
       stringifyClass: JSON.stringify(parsedContents),
@@ -79,6 +96,34 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
         alert(error.response.data.message);
       });
   };
+
+  const submitNewContents = ({
+    chapterIndex,
+    title,
+    contents,
+  }: SubmitNewContentType) => {
+    const newContents = { subTitle: title, content: contents };
+
+    requestAddStudyContents(id, {
+      chapterIndex,
+      stringifyContents: JSON.stringify(newContents),
+    })
+      .then(() => {
+        alert(`추가 완료.`);
+        setModeView();
+        getDataStale();
+      })
+      .catch(error => {
+        console.log(error);
+        alert(error.response.data.message);
+      });
+  };
+
+  useEffect(() => {
+    if (currentDocument && documentIndex && !isModify) {
+      viewContent(documentIndex);
+    }
+  }, [study]);
 
   if (!study) return <p>loading</p>;
 
@@ -97,7 +142,7 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
         </S.CardHeader>
         <S.Content>
           {currentDocument ? (
-            isModify && documentIndex ? (
+            documentIndex && isModify ? (
               <ModifyContents
                 documentIndex={documentIndex}
                 currentDocument={currentDocument}
@@ -129,6 +174,12 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
                 </S.ChapterContainer>
               </>
             )
+          ) : typeof isAddMode === 'number' ? (
+            <AddContents
+              chapterIndex={isAddMode}
+              setModeView={setModeView}
+              submitContents={submitNewContents}
+            />
           ) : (
             <>
               <h3>컨텐츠</h3>
@@ -136,6 +187,8 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
                 <ContentsIndex
                   parsedContents={parsedContents}
                   viewContent={viewContent}
+                  isTeacher={isTeacher}
+                  setModeAdd={setModeAdd}
                 />
               </S.ChapterContainer>
             </>

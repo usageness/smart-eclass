@@ -21,7 +21,8 @@ function StudyController() {
     requestGetStudy(id)
       .then(data => {
         setStudy(data);
-        console.log(data);
+        console.log('data is fetched :', data);
+        setIsStale(false);
       })
       .catch(error => {
         alert(error.response.data.message);
@@ -29,12 +30,12 @@ function StudyController() {
   };
 
   const getDataStale = () => {
+    console.log('make data stale');
     setIsStale(true);
   };
 
   useEffect(() => {
     getStudy();
-    setIsStale(false);
   }, [isStale]);
 
   useEffect(() => {
