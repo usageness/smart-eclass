@@ -8,9 +8,11 @@ import ModifyContents from './ModifyContents';
 import AddContents from './AddContents';
 import Pencil from 'assets/pencil.svg';
 import {
+  requestAddStudyChapter,
   requestAddStudyContents,
   requestModifyStudyContents,
 } from 'apis/request/study';
+import AddChapter from './AddChapter';
 
 interface StudyDetailProps {
   study: study;
@@ -29,6 +31,9 @@ export interface SubmitNewContentType {
   title: string;
   contents: string;
 }
+export interface SubmitNewChapterType {
+  title: string;
+}
 
 export interface currentDocumentData {
   chapterIndex: number;
@@ -39,7 +44,8 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
   const { id } = useParams();
   const [content, setContent] = useState('');
   const [isModify, setIsModify] = useState(false);
-  const [isAddMode, setIsAddMode] = useState<null | number>(null);
+  const [isAddContentMode, setIsAddContentMode] = useState<null | number>(null);
+  const [isAddChapterMode, setIsAddChapterMode] = useState(false);
   const [currentDocument, setCurrentDocument] = useState<string | null>(null);
   const [documentIndex, setDocumentIndex] =
     useState<currentDocumentData | null>(null);
@@ -64,12 +70,17 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
     setIsModify(false);
   };
 
-  const setModeAdd = (chapterIndex: number) => {
-    setIsAddMode(chapterIndex);
+  const setModeAddContents = (chapterIndex: number) => {
+    setIsAddContentMode(chapterIndex);
+  };
+
+  const setModeAddChapter = () => {
+    setIsAddChapterMode(true);
   };
 
   const setModeView = () => {
-    setIsAddMode(null);
+    setIsAddContentMode(null);
+    setIsAddChapterMode(false);
   };
 
   const submitModification = ({
@@ -119,6 +130,19 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
       });
   };
 
+  const submitNewChapter = ({ title }: SubmitNewChapterType) => {
+    requestAddStudyChapter(id, title)
+      .then(() => {
+        alert(`추가 완료.`);
+        setModeView();
+        getDataStale();
+      })
+      .catch(error => {
+        console.log(error);
+        alert(error.response.data.message);
+      });
+  };
+
   useEffect(() => {
     if (currentDocument && documentIndex && !isModify) {
       viewContent(documentIndex);
@@ -143,6 +167,7 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
         <S.Content>
           {currentDocument ? (
             documentIndex && isModify ? (
+              // 컨텐츠 수정 모드
               <ModifyContents
                 documentIndex={documentIndex}
                 currentDocument={currentDocument}
@@ -151,6 +176,7 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
                 submitModification={submitModification}
               />
             ) : (
+              // 컨텐츠 읽기 모드
               <>
                 <S.DocumentHeader>
                   <div>
@@ -174,11 +200,18 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
                 </S.ChapterContainer>
               </>
             )
-          ) : typeof isAddMode === 'number' ? (
+          ) : typeof isAddContentMode === 'number' ? (
+            // 컨텐츠 추가 모드
             <AddContents
-              chapterIndex={isAddMode}
+              chapterIndex={isAddContentMode}
               setModeView={setModeView}
               submitContents={submitNewContents}
+            />
+          ) : isAddChapterMode ? (
+            // 챕터 추가 모드
+            <AddChapter
+              setModeView={setModeView}
+              submitChapter={submitNewChapter}
             />
           ) : (
             <>
@@ -188,7 +221,8 @@ function StudyDetail({ study, isTeacher, getDataStale }: StudyDetailProps) {
                   parsedContents={parsedContents}
                   viewContent={viewContent}
                   isTeacher={isTeacher}
-                  setModeAdd={setModeAdd}
+                  setModeAddContents={setModeAddContents}
+                  setModeAddChapter={setModeAddChapter}
                 />
               </S.ChapterContainer>
             </>

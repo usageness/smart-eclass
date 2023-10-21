@@ -141,6 +141,8 @@ const ChapterContainer = styled.div`
 const ChapterWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  min-width: 10rem;
 `;
 
 const ChapterTable = styled.div`

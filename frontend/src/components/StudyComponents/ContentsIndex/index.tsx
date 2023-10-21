@@ -10,14 +10,16 @@ interface contentsIndexProps {
   parsedContents: StudyChapterProps[];
   viewContent: ({ chapterIndex, subIndex }: StudyIndexProps) => void;
   isTeacher: boolean;
-  setModeAdd: (chapterIndex: number) => void;
+  setModeAddContents: (chapterIndex: number) => void;
+  setModeAddChapter: () => void;
 }
 
 function ContentsIndex({
   parsedContents,
   viewContent,
   isTeacher,
-  setModeAdd,
+  setModeAddContents,
+  setModeAddChapter,
 }: contentsIndexProps) {
   return (
     <S.ChapterTable>
@@ -37,7 +39,7 @@ function ContentsIndex({
               </S.ChapterItem>
             ))}
             {isTeacher ? (
-              <S.AddButton onClick={() => setModeAdd(chapterIndex)}>
+              <S.AddButton onClick={() => setModeAddContents(chapterIndex)}>
                 <img src={Plus} alt="add content" />
               </S.AddButton>
             ) : (
@@ -45,6 +47,15 @@ function ContentsIndex({
             )}
           </S.ChapterWrapper>
         ),
+      )}
+      {isTeacher ? (
+        <S.ChapterWrapper>
+          <S.AddButton onClick={setModeAddChapter}>
+            <img src={Plus} alt="add chapter" />
+          </S.AddButton>
+        </S.ChapterWrapper>
+      ) : (
+        <div />
       )}
     </S.ChapterTable>
   );

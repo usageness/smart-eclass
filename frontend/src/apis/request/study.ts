@@ -35,6 +35,15 @@ const requestAddStudyContents = (
     .then(res => res.data);
 };
 
+const requestAddStudyChapter = (
+  id: string,
+  chapterName: string,
+): Promise<study> => {
+  return axiosWithAccessToken
+    .post(`/study/chapter/${id}`, chapterName)
+    .then(res => res.data);
+};
+
 export {
   requestAllStudy,
   requestStudy,
@@ -42,4 +51,5 @@ export {
   requestJoinStudy,
   requestModifyStudyContents,
   requestAddStudyContents,
+  requestAddStudyChapter,
 };
