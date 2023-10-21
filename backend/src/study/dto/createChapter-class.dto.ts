@@ -1,4 +1,5 @@
 export class CreateChapterClassDto {
-  chapterIndex: string;
+  userid: string;
+  id: number;
   chapterName: string;
 }

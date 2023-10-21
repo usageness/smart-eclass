@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateContentsClassDto } from './dto/addContents-class-dto';
 import { CreateStudyDto } from './dto/create-study.dto';
+import { CreateChapterClassDto } from './dto/createChapter-class.dto';
 import { GetStudyDto } from './dto/get-study.dto';
 import { JoinStudyDto } from './dto/join-study.dto';
 import { UpdateClassDto } from './dto/update-class.dto';
@@ -117,6 +118,29 @@ export class StudyService {
     const newContents = JSON.parse(stringifyContents);
 
     parsedContents[chapterIndex].chapterList.push(newContents);
+    targetStudy.class = JSON.stringify(parsedContents);
+
+    const updatedStudy = await this.studyRepository.update(id, targetStudy);
+    return updatedStudy;
+  }
+
+  async createClassChapter({ userid, id, chapterName }: CreateChapterClassDto) {
+    const targetStudy = await this.studyRepository.findOne({
+      where: { id },
+    });
+
+    if (!targetStudy.teacher.includes(userid)) {
+      throw new UnauthorizedException('해당 스터디에 대한 권한이 없습니다.');
+    }
+
+    const parsedContents = JSON.parse(targetStudy.class);
+
+    const newChapterObject = {
+      chapterTitle: chapterName,
+      chapterList: [],
+    };
+    parsedContents.push(newChapterObject);
+
     targetStudy.class = JSON.stringify(parsedContents);
 
     const updatedStudy = await this.studyRepository.update(id, targetStudy);

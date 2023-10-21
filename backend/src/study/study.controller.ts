@@ -14,6 +14,7 @@ import { CreateStudyDto } from './dto/create-study.dto';
 import { UpdateClassDto } from './dto/update-class.dto';
 import UsersService from '../users/users.service';
 import { CreateContentsClassDto } from './dto/addContents-class-dto';
+import { CreateChapterClassDto } from './dto/createChapter-class.dto';
 
 @Controller('study')
 export class StudyController {
@@ -97,6 +98,23 @@ export class StudyController {
       userid,
       id,
       stringifyContents,
+    });
+    res.status(HttpStatus.CREATED).send(classes);
+  }
+
+  @Post('/chapter/:id')
+  async createChapter(
+    @Headers('Authorization') authHeader: string,
+    @Param('id') id: number,
+    @Body() { chapterName }: CreateChapterClassDto,
+    @Res() res,
+  ) {
+    const { userid } = await this.usersService.getProfile(authHeader);
+
+    const classes = await this.studyService.createClassChapter({
+      userid,
+      id,
+      chapterName,
     });
     res.status(HttpStatus.CREATED).send(classes);
   }
