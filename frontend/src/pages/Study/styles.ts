@@ -67,10 +67,42 @@ const NoticeDiv = styled.div`
   height: 100%;
 `;
 
+const FlexLine = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Title = styled.h2`
   font-size: 2rem;
   font-weight: bold;
 
   margin-top: 1rem;
 `;
-export { Container, Notice, SampleNotice, NoticeText, NoticeDiv, Title };
+
+const CreateStudyButton = styled.button`
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.1rem;
+
+  width: 10rem;
+
+  padding: 1rem;
+
+  border-radius: 10px;
+  background: radial-gradient(
+    circle farthest-corner at 10% 10%,
+    rgba(123, 142, 255, 0.9) 40%,
+    rgba(116, 182, 247, 0.9) 90%
+  );
+`;
+
+export {
+  Container,
+  Notice,
+  SampleNotice,
+  NoticeText,
+  NoticeDiv,
+  FlexLine,
+  Title,
+  CreateStudyButton,
+};

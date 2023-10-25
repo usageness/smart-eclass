@@ -44,6 +44,15 @@ const requestAddStudyChapter = (
     .then(res => res.data);
 };
 
+const requestCreateStudy = (
+  studyname: string,
+  introduction: string,
+): Promise<study> => {
+  return axiosWithAccessToken
+    .post(`/study`, { studyname, introduction })
+    .then(res => res.data);
+};
+
 export {
   requestAllStudy,
   requestStudy,
@@ -52,4 +61,5 @@ export {
   requestModifyStudyContents,
   requestAddStudyContents,
   requestAddStudyChapter,
+  requestCreateStudy,
 };

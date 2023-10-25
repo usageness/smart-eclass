@@ -1,6 +1,7 @@
 import Layouts from 'components/Layouts';
 import Login from 'pages/Login';
 import Main from 'pages/Main';
+import NewStudy from 'pages/NewStudy';
 import Signup from 'pages/Signup';
 import Study from 'pages/Study';
 import StudyController from 'pages/StudyController';
@@ -22,6 +23,7 @@ function App() {
               <Route index element={<Study />} />
               <Route path=":id" element={<StudyController />} />
             </Route>
+            <Route path="/NewStudy" element={<NewStudy />} />
             <Route path="*" element={<Main />} />
           </Routes>
         </Layouts>
